@@ -24,7 +24,7 @@ function App() {
       setError("");
 
       const response = await fetch(
-        `http://127.0.0.1:8000/weather?city=${encodeURIComponent(city)}`
+        `https://sky-cast-gzu4-ja7wphmkl-jaweria-s-projects2.vercel.app/weather?city=${encodeURIComponent(city)}`
       );
 
       const data = await response.json();
@@ -73,7 +73,7 @@ function App() {
 
         try {
           const response = await fetch(
-            `http://127.0.0.1:8000/weather-by-location?latitude=${latitude}&longitude=${longitude}`
+            `https://sky-cast-gzu4-ja7wphmkl-jaweria-s-projects2.vercel.app/weather-by-location?latitude=${latitude}&longitude=${longitude}`
           );
 
           const data = await response.json();
