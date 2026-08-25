@@ -10,6 +10,8 @@ function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [searchHistory, setSearchHistory] = useState([]);
   const [lastUpdated, setLastUpdated] = useState("");
+  const [assistantQuestion, setAssistantQuestion] = useState("");
+  const [assistantAnswer, setAssistantAnswer] = useState("");
 
   const searchWeather = async () => {
     if (!city.trim()) {
@@ -133,6 +135,75 @@ function App() {
   }
 
   return "sunny";
+};
+const getWeatherAdvice = (question) => {
+  if (!weather) return "Please search for a city first.";
+
+  const text = question.toLowerCase();
+  const condition = weather.condition.toLowerCase();
+  const temperature = weather.temperature;
+
+  if (
+    text.includes("umbrella") ||
+    text.includes("rain") ||
+    text.includes("barish")
+  ) {
+    if (
+      condition.includes("rain") ||
+      condition.includes("drizzle") ||
+      condition.includes("thunderstorm")
+    ) {
+      return `🌧️ Yes, you should carry an umbrella in ${weather.city}. Rainy weather is currently expected.`;
+    }
+
+    return `☀️ An umbrella may not be necessary right now in ${weather.city}, but you can check the 5-day forecast for upcoming rain.`;
+  }
+
+  if (
+    text.includes("hot") ||
+    text.includes("garmi") ||
+    text.includes("temperature")
+  ) {
+    return `🌡️ The current temperature in ${weather.city} is ${Math.round(
+      temperature
+    )}°C, with ${weather.condition.toLowerCase()} conditions.`;
+  }
+
+  if (
+    text.includes("cold") ||
+    text.includes("sardi")
+  ) {
+    return `🥶 The current temperature in ${weather.city} is ${Math.round(
+      temperature
+    )}°C. ${temperature <= 15 ? "Warm clothes are recommended." : "The weather is not very cold."}`;
+  }
+
+  if (
+    text.includes("outdoor") ||
+    text.includes("outside") ||
+    text.includes("bahar")
+  ) {
+    if (
+      condition.includes("rain") ||
+      condition.includes("storm") ||
+      condition.includes("snow")
+    ) {
+      return `⚠️ Outdoor activities may not be ideal in ${weather.city} because the current condition is ${weather.condition.toLowerCase()}.`;
+    }
+
+    return `🌤️ The weather in ${weather.city} looks suitable for outdoor activities.`;
+  }
+
+  if (
+    text.includes("weather") ||
+    text.includes("mausam")
+  ) {
+    return `🌤️ ${weather.city} currently has ${weather.condition.toLowerCase()} conditions with a temperature of ${Math.round(
+      temperature
+    )}°C, humidity of ${weather.humidity}%, and wind speed of ${weather.wind_speed} km/h.`;
+  }
+
+  return `🤖 I can help you with weather questions about ${weather.city}, such as "Should I carry an umbrella?", "Is it hot?", or "Can I go outside?"`;
 };
 
   const formatDate = (date) => {
@@ -391,8 +462,80 @@ function App() {
                 </div>
 
               </div>
+             </section>
 
-            </section>
+            <section className="weather-assistant">
+  <h2>🤖 SkyCast Weather Assistant</h2>
+
+  <p>
+    Ask me anything about the current weather.
+  </p>
+  <div className="quick-questions">
+  <button
+    onClick={() => {
+      setAssistantQuestion("Should I carry an umbrella?");
+      setAssistantAnswer(
+        getWeatherAdvice("Should I carry an umbrella?")
+      );
+    }}
+  >
+    ☔ Umbrella?
+  </button>
+
+  <button
+    onClick={() => {
+      setAssistantQuestion("Is it hot?");
+      setAssistantAnswer(
+        getWeatherAdvice("Is it hot?")
+      );
+    }}
+  >
+    🌡️ Is it hot?
+  </button>
+
+  <button
+    onClick={() => {
+      setAssistantQuestion("Can I go outside?");
+      setAssistantAnswer(
+        getWeatherAdvice("Can I go outside?")
+      );
+    }}
+  >
+    🌤️ Go outside?
+  </button>
+</div>
+
+  <div className="assistant-input">
+    <input
+      type="text"
+      placeholder="Ask: Should I carry an umbrella?"
+      value={assistantQuestion}
+      onChange={(e) => setAssistantQuestion(e.target.value)}
+      onKeyDown={(e) => {
+        if (e.key === "Enter" && assistantQuestion.trim()) {
+          setAssistantAnswer(getWeatherAdvice(assistantQuestion));
+        }
+      }}
+    />
+
+    <button
+      onClick={() => {
+        if (assistantQuestion.trim()) {
+          setAssistantAnswer(getWeatherAdvice(assistantQuestion));
+        }
+      }}
+    >
+      Ask
+    </button>
+  </div>
+
+  {assistantAnswer && (
+    <div className="assistant-answer">
+      {assistantAnswer}
+    </div>
+  )}
+</section>
+            
 
             <section className="forecast">
 

@@ -1332,3 +1332,96 @@ body {
   font-size: 16px;
   line-height: 1.4;
 }
+.weather-assistant {
+  margin: 30px 0;
+  padding: 24px;
+  border-radius: 20px;
+  background: rgba(255, 255, 255, 0.75);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+  text-align: center;
+  backdrop-filter: blur(10px);
+}
+
+.weather-assistant h2 {
+  margin-bottom: 12px;
+  font-size: 22px;
+}
+
+.weather-assistant p {
+  margin: 0;
+  font-size: 16px;
+  line-height: 1.6;
+}
+
+.dark-mode .weather-assistant {
+  background: rgba(30, 30, 30, 0.75);
+}
+.assistant-input {
+  display: flex;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.assistant-input input {
+  flex: 1;
+  padding: 12px 15px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 12px;
+  font-size: 15px;
+  outline: none;
+}
+
+.assistant-input input:focus {
+  border-color: #6bbf9a;
+}
+
+.assistant-input button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+  font-weight: 600;
+}
+
+.assistant-answer {
+  margin-top: 18px;
+  padding: 15px;
+  border-radius: 12px;
+  line-height: 1.6;
+  text-align: left;
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.dark-mode .assistant-answer {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+@media (max-width: 600px) {
+  .assistant-input {
+    flex-direction: column;
+  }
+
+  .assistant-input button {
+    width: 100%;
+  }
+}
+.quick-questions {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin: 15px 0;
+}
+
+.quick-questions button {
+  padding: 9px 14px;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 14px;
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.quick-questions button:hover {
+  transform: translateY(-2px);
+}
